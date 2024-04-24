@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "dev": "NODE_ENV=dev nodemon src/index.js",
-    "start": "nodemon src/index.js"
+    "start": "nodemon src/index.js",
+    "test": "jest"
   },
   "keywords": [],
   "author": "",
@@ -22,6 +23,7 @@
     "winston": "^3.3.3"
   },
   "devDependencies": {
+    "jest": "^29.7.0",
     "nodemon": "^2.0.12"
   }
 }
