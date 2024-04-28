@@ -1,4 +1,4 @@
-name: Deploy on QA
+name: Deploy on QA 
 
 on:
   push:
