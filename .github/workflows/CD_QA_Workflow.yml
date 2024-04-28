@@ -1,0 +1,51 @@
+name: Deploy on QA
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  deploy_on_qa:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Source Code 
+      uses: actions/checkout@v4
+
+    - name: Create Customer Env file
+      working-directory: ./customer
+      run: |
+        touch .env
+        echo ${{ secrets.CUSTOMER_ENV_FILE }} >> .env
+        cat .env
+
+    - name: Create Products Env file
+      working-directory: ./products
+      run: |
+        touch .env
+        echo ${{ secrets.PRODUCTS_ENV_FILE }} >> .env
+        cat .env
+
+    - name: Create Shopping Env file
+      working-directory: ./shopping
+      run: |
+        touch .env
+        echo ${{ secrets.SHOPPING_ENV_FILE }} >> .env
+        cat .env
+
+    - name: Generate Deployment Package
+      run: |
+        zip -r deploy.zip . -x '*.git'
+
+    #- name: Deploy on Elastic BeanStalk QA Env
+     # uses: einaregilsson/beanstalk-deploy@v20
+      #with:
+       # aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        #aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        #application_name: online-shop
+        #environment_name: Online-shop-env
+        #version_label: "ver-${{ github.sha }}"
+        #region: eu-north-1
+        #deployment_package: deploy.zip
