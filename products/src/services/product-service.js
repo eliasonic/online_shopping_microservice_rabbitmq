@@ -4,7 +4,6 @@ const { APIError } = require('../utils/app-errors');
 
 // All Business logic will be here
 class ProductService {
-
     constructor(){
         this.repository = new ProductRepository();
     }
@@ -37,7 +36,6 @@ class ProductService {
             throw new APIError('Data Not found')
         }
     }
-
 
     async GetProductDescription(productId){
         try {
@@ -75,25 +73,18 @@ class ProductService {
         }
     }
 
-    async GetProductPayload(userId, { productId, qty }, event) {
-        try {
-            const product = await this.repository.FindById(productId)
+    async serveRPCRequest(payload) {
+        const { type, data } = payload
 
-            if (product) {
-                const payload = {
-                    event,
-                    data: { userId, product, qty }
-                }    
-                return FormateData(payload)
-            } else {
-                return FormateData({ error: 'No product available'})
-            }
-            
-        } catch (err) {
-            throw new APIError('Data Not found')
+        switch(type) {
+            case 'VIEW_PRODUCT':
+                return this.repository.FindById(data)
+            case 'VIEW_PRODUCTS':
+                return this.repository.FindSelectedProducts(data)
+            default:
+                break
         }
-    }
-     
+    } 
 }
 
 module.exports = ProductService;
