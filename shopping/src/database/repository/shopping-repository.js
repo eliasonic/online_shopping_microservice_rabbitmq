@@ -72,7 +72,7 @@ class ShoppingRepository {
             if (cart) {
                 if (isRemove) {
                     const cartItems = _.filter(cart.items, (item) => {
-                        item.product._id !== product._id
+                        return item.product._id !== product._id
                     })
                     cart.items = cartItems
                 } else {
@@ -122,8 +122,12 @@ class ShoppingRepository {
             if (wishlist) {
                 if (isRemove) {
                     const products = _.filter(wishlist.products, (product) => {
-                        product._id !== productId
+                        return product._id !== productId
                     })
+                    // const products = wishlist.products.filter(({ _id }) => {
+                    //     return _id !== productId
+                    // })
+                    
                     wishlist.products = products
                 } else {
                     const wishlistIndex = _.findIndex(wishlist.products, { 

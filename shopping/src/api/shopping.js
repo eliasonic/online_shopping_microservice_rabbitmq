@@ -23,7 +23,7 @@ module.exports = (app, channel) => {
         const { _id } = req.user;
         const { productId, qty } = req.body
         try {
-            const { data } = await service.AddCartItem(_id, productId, qty)
+            const { data } = await service.AddCartItem(_id, productId, qty) 
             return res.status(200).json(data);
         } catch (err) {
             next(err);
@@ -52,7 +52,7 @@ module.exports = (app, channel) => {
         }
     });
 
-    app.post('/wishlist', UserAuth, async (req,res,next) => {
+    app.post('/wishlist', UserAuth, async (req,res,next) => { 
         const { _id } = req.user;
         const { productId } = req.body
         try {
@@ -60,7 +60,7 @@ module.exports = (app, channel) => {
             return res.status(200).json(data);
         } catch (err) {
             next(err);
-        }
+        } 
     });
 
     app.delete('/wishlist/:id', UserAuth, async (req,res,next) => {

@@ -5,6 +5,8 @@ const { v4: uuid4 } = require('uuid')
 const { APP_SECRET, MESSAGE_BROKER_URL, EXCHANGE_NAME, QUEUE_NAME, SHOPPING_BINDING_KEY } = require("../config");
 
 //Utility functions
+let amqplibConnection = null
+
 module.exports.GenerateSalt = async () => {
   return await bcrypt.genSalt();
 };
@@ -103,7 +105,7 @@ module.exports.RPCRequest = async (RPC_QUEUE_NAME, requestPayload) => {
               }
           }, 
           {
-          noAck: true 
+            noAck: true 
           }
       )
   })
